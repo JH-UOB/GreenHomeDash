@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" type="text/css" href="dashboard3.css" media="screen" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script> src = "https://cdn.jsdelivr.net/npm/chart.js"</script>
+  <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+  <script>
+    window.__define = window.define;
+    window.__require = window.require;
+    window.define = undefined;
+    window.require = undefined;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script>
+    window.define = window.__define;
+    window.require = window.__require;
+    window.__define = undefined;
+    window.__require = undefined;
+  </script>
+  <title>Document</title>
+  <style>
+    body {
+      font-family: "Roboto", "Thin 100";
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <div class="parent">
+    <div class="div12"> </div>
+    <div class="div1">
+      <img style="width: 100%;  margin-left: auto;  margin-right: auto; " src="images/terrace.png" id="house">
+    </div>
+    <div class="div9">
+    </div>
+
+
+    <div class="div2">
+      <img style="width: 32%; margin-left: 1%; margin-top: 5px;" src="images/detached_off.png" id="detached">
+      <img style="width: 32%;" src="images/semidetached_off.png" id="semidetached">
+      <img style="width: 32%;" src="images/terraced_on.png" id="terraced">
+      <br>
+      <img style="width: 30%; margin-left: 20%;  margin-right: auto; " src="images/2people_on.png" id="2people">
+      <img style="width: 30%; margin-left: auto;  margin-right: auto; " src="images/4people_off.png" id="4people">
+      <br>
+
+      <div class="slidecontainer">
+        <h2 style="margin-left: 20%;">Installed Solar PV: <span id="demo"></span> kWp</h2>
+        <input style="margin-left: 5%;" type="range" min="0" max="5" value="0" step="1" class="rangeslider"
+          id="myRange">
+      </div>
+      <br> <br>
+      <h2>&nbsp; PV Panels already installed?
+        <label class="switch" style="width: 60px; float: right;">
+          <input type="checkbox" id="PVInst">
+          <span class="slider round"></span>
+        </label>
+      </h2>
+      <h2>&nbsp; Solar Thermal
+        <label class="switch" style="width: 60px; float: right;">
+          <input type="checkbox" id="solarThermal">
+          <span class="slider round"></span>
+        </label>
+      </h2>
+      <h2>&nbsp; ST Panels already installed?
+        <label class="switch" style="width: 60px; float: right;">
+          <input type="checkbox" id="solarThermalInst">
+          <span class="slider round"></span>
+        </label>
+      </h2>
+      <br><br><br>
+      <br>
+      <img style="width: 35%; margin-left: 15%;" src="images/ashp_off.png" id="ashp">
+      <img style="width: 35%; " src="images/gasboiler_on.png" id="gas">
+      <br>
+      <br>
+      <button id="myBtn" class="button" style="width: 30%;  margin-left: 18%; background-color: #003f5c;">Info</button>
+      <button class="button" style="width: 20%;  margin-left: 10%;" id="go">Go</button>
+
+    </div>
+    <div class="div3">
+      <h3 style="margin-left: 27%; margin-bottom:10px"> Installation cost: </h3>
+      <h1 style="margin-left: 25%; font-size:50px; margin-top:0; padding:0;" className='element' id='installationCost'>
+        </h2>
+
+    </div>
+    <div class="div4">
+      <h3 style="margin-left: 20%; margin-bottom:10px"> Available subsidies: </h3>
+      <h1 style="margin-left: 25%; font-size:50px; margin-top:0; padding:0;" className='element'
+        id='availableSubsidies'>
+        </h2>
+    </div>
+    <div class="div5">
+      <h3 style="margin-left: 27%; margin-bottom:10px"> Cost to you: </h3>
+      <h1 style="margin-left: 17%; font-size:50px; margin-top:0; padding:0;" className='element' id='costToYou'>
+        </h2>
+    </div>
+    <div class="div6">
+      <!-- <canvas id="myChart" style="max-height:100%; max-width:95%; margin-left: 1%;"></canvas> -->
+      <canvas id="myChart" style="width:100%;height:95%"></canvas>
+    </div>
+
+
+
+    <div class="div7">
+      <div class="tab">
+        <button class="tablinks" onclick="openCity(event, '5 Years')" id="defaultOpen">5 Years</button>
+        <button class="tablinks" onclick="openCity(event, '10 Years')" id="open2">10 Years</button>
+        <button class="tablinks" onclick="openCity(event, '20 Years')" id="open3">20 Years</button>
+      </div>
+
+      <!-- Tab content -->
+      <div id="5 Years" class="tabcontent">
+        <canvas id="5Year" style="width:100%;height:95%"></canvas>
+      </div>
+
+      <div id="10 Years" class="tabcontent">
+        <canvas id="10Year" style="width:100%;height:95%"></canvas>
+      </div>
+
+      <div id="20 Years" class="tabcontent">
+        <canvas id="20Year" style="width:100%;height:95%"></canvas>
+      </div>
+    </div>
+
+
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>
+        <h4>Solar PV Panels:</h4>
+        Solar PV panels absorb energy from the sun and convert it to electricity. Once installed, this electriity is
+        completely free for you to use. It connects directly to your house's electricity network so you don't have
+        to do anything extra to make use of this electricity. Any electricity generated by your solar panels that you
+        don't use can be sold back to the National Grid. Depending on your tariff you could be paid as high as 20p/kwh.
+        This will appear as a discount on your energy bill. If you install solar PV panels today, they are likely to 
+        repay themselves in approximately 10 years. Modern PV panels have a life expectancy of up to 25 years so for 
+        more than half of your panels' lifespan, they will be making you money.
+        <br> <br>
+
+        <h4>Air Souce Heat Pumps: </h4>
+        Air source heat pumps are a kind of renewable energy technology that take the warmth from the air outside
+        (even when it’s cold out) and use it to heat the home. You can get other heat pumps that do the same thing
+        using the warmth in the ground and in water, but air source heat pumps are suitable for a wider range of
+        properties. Heat pumps produce lower temperature hot water than a gas boiler so you are likely to need to
+        install larger radiators. However, once this is done, you're home can be heated the same temperature as you
+        are used to with a gas boiler. By extracting heat from the surroundings, a heat pump can produce heat up to
+        three to five times the amount of electrical energy being put in. This makes them extremely efficient.
+        <br> <br>
+
+        <h4>Solar Thermal Panels:</h4>
+        Solar water heating systems use panels or tubes, called solar collectors, to gather solar energy. The solar
+        collectors convert the infra-red portion of visible light into heat. They are filled with a mix of water and
+        glycol. This fluid is pumped around a circuit, which passes through your hot water cylinder. This fluid never
+        comes into direct contact with the hot water you use. During summer this is likely to provide all of the hot
+        water you need for free. Once installed this technology will last for up to 30 years with only minimal
+        maintenance required.
+        <br> <br>
+
+        <h4>Green Home Grants:</h4>
+        To encourage households to improve the efficiency of their homes, the government is offering up to £5000 in grants 
+        to help pay for improvements. This can be spent on a range of green improvements including the installation of an
+        air source heat pump, solar thermal panels, or new insulation measures. These subsidies are no longer available for 
+        installing solar PV panels but these are now cheap enough to repay themselves over a period of approximately 10 years.
+        <br><br>
+
+        <h4>Gas Boilers:</h4>
+        If you decide to replace your gas boiler, be aware that the efficiency value advertised for a new boiler can
+        be misleading. A modern condenser boiler is able to operate at an efficiency level of around 90%. However, this
+        is only the case under certain conditions. In reality, this efficiency level can be as low as 60%, making it more 
+        expensive to heat your home.
+        <br><br>
+
+        <h4>Carbon Emissions:</h4>
+        A 4 person house using grid electricity and a gas boiler to heat their home will produce approximately 10 tonnes of 
+        carbon over 5 years. This is equivalent to driving nearly 25,000 miles in a petrol powered car or the amount of carbon
+        absorbed by 165 tree seedlings growing for 10 years.
+        </p>
+      </div>
+
+    </div>
+    <div class="div10"></div>
+
+  </div>
+
+
+
+
+  <script src='dashboard3.js'></script>
+</body>
+
+</html>
